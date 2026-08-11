@@ -59,6 +59,9 @@ Temporary state belongs in the runtime envelope, not in the canonical prompt.
 依 [Prompt 分類法則](../learning-system/prompt-classification-rules.md) 把原始需求編譯成
 一個聚焦 Prompt。Classifier 只負責 Classification 與 Compilation，不執行 Task；
 若使用者已明確選定下列 Intent Alias，直接使用對應流程，不必多加一層 Classifier。
+需要在 Discord Text Channel 直接複製時，使用
+[Discord 可複製 Prompt 目錄](../learning-system/discord-prompt-catalog.md)；每次只貼一個
+Copy Block，不要合併成 Mega-prompt。
 
 ## 2. Intent aliases
 

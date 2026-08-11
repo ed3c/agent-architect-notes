@@ -77,7 +77,7 @@ flowchart TD
 | Control Plane | Schedule, status, scoring inputs, review dates, indexes | Google Sheet |
 | Knowledge Plane | Domain models, task instructions, templates, architecture notes | `docs/learning-system/`, `docs/kb/`, `docs/templates/` |
 | Context Routing Plane | Lifecycle/domain/mode classification and minimal context packs | `CONTEXT_ROUTING.md` |
-| Prompt Compilation Plane | Raw request classification and smallest sufficient copy-ready prompt | `PROMPT_CLASSIFIER_SYSTEM_PROMPT.md`, `../learning-system/prompt-classification-rules.md` |
+| Prompt Compilation Plane | Raw request classification and smallest sufficient copy-ready prompt | `PROMPT_CLASSIFIER_SYSTEM_PROMPT.md`, `../learning-system/prompt-classification-rules.md`, `../learning-system/discord-prompt-catalog.md` |
 | Task Compiler | Contract, timebox, hint policy, assertions, evidence and stop condition | `SYSTEM_PROMPT.md` |
 | State and Evidence Plane | Enums, keys, score rules, receipts, idempotency and drift handling | `STATE_EVIDENCE_CONTRACT.md` |
 | Qualification Plane | Repeatable scenarios that detect prompt or integration regressions | `INTEGRATION_TESTS.md` |
