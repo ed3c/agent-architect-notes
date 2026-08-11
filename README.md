@@ -47,7 +47,14 @@ The agent integration layer turns live learning state into a bounded task contra
 - [Production Live Coding](docs/kb/production-live-coding.md)
 - [System Design Index](docs/kb/system-design-index.md)
 - [Agent Architecture Index](docs/kb/agent-architecture-index.md)
+- [Durable Agent State：Replay、Snapshot、Resume](docs/kb/durable-agent-state.md)
 - [Evals, Security, Observability](docs/kb/evals-security-observability.md)
+
+## Qualified Learning Units
+
+- [LAB-AA-01：Durable Agent State](exercises/production-labs/lab-01-durable-agent-state/README.md)
+- [SD-AA-01：Durable Agent Orchestrator](exercises/system-design/sd-01-durable-agent-orchestrator.md)
+- [ADR-0001：Durable Agent Recovery Hybrid](docs/adr/adr-0001-durable-agent-recovery-hybrid.md)
 
 ## Templates
 

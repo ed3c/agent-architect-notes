@@ -31,6 +31,7 @@ Before selecting a domain file:
 | Testing | Correctness or BugFree review | `docs/learning-system/dashboard-scoring.md` |
 | Production Coding | API, async, retry, queue, cache, logging | `docs/kb/production-live-coding.md` |
 | System Design | 45-60 minute architecture prompt | `docs/kb/system-design-index.md` |
+| Durable Agent State | Crash/restart、replay、checkpoint、snapshot、resume、idempotency、effect ambiguity 或 rollback | `docs/kb/durable-agent-state.md` |
 | Agent Architecture | State, memory, termination, tool gateway | `docs/kb/agent-architecture-index.md` |
 | Evals | Dataset, grader, regression threshold | `docs/kb/evals-security-observability.md` |
 | Security | Tool use, prompt injection, sandbox, RBAC | `docs/kb/evals-security-observability.md` |

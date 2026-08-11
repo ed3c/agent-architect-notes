@@ -1,5 +1,12 @@
 # Agent Architecture Index
 
+## Qualified Learning Units
+
+- [Durable Agent State：Replay、Checkpoint、Snapshot 與 Effect Boundary](durable-agent-state.md)
+- [SD-AA-01：Design a Durable Agent Orchestrator](../../exercises/system-design/sd-01-durable-agent-orchestrator.md)
+- [LAB-AA-01：Durable Agent State 與 Effect Boundary](../../exercises/production-labs/lab-01-durable-agent-state/README.md)
+- [ADR-0001：Validated Snapshot + Tail Replay](../adr/adr-0001-durable-agent-recovery-hybrid.md)
+
 ## Core Concepts
 
 - Agent Control Loop
