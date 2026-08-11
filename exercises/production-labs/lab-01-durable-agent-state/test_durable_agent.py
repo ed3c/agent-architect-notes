@@ -6,6 +6,8 @@ from durable_agent import (
     DurableRunner,
     Event,
     InMemoryEventStore,
+    RunController,
+    RunTerminated,
     replay_with_snapshot,
     SimulatedCrash,
     replay,
@@ -122,6 +124,46 @@ class EffectBoundaryContractTests(unittest.TestCase):
         self.assertEqual(
             state.completed_effects["effect-1"], {"accepted": "send once"}
         )
+
+
+class TerminationContractTests(unittest.TestCase):
+    def test_max_iteration_limit_persists_terminal_state(self):
+        store = InMemoryEventStore()
+        controller = RunController.start(
+            store,
+            run_id="run-1",
+            max_iterations=2,
+            max_budget=100,
+        )
+        controller.record_iteration(cost=1)
+        controller.record_iteration(cost=1)
+
+        with self.assertRaisesRegex(RunTerminated, "max_iterations"):
+            RunController(store).record_iteration(cost=1)
+
+        state = replay(store.read_all()).state
+        self.assertEqual(state.iteration, 2)
+        self.assertTrue(state.terminated)
+        self.assertEqual(state.termination_reason, "max_iterations")
+
+    def test_budget_limit_rejects_iteration_before_overspend(self):
+        store = InMemoryEventStore()
+        controller = RunController.start(
+            store,
+            run_id="run-1",
+            max_iterations=10,
+            max_budget=5,
+        )
+        controller.record_iteration(cost=4)
+
+        with self.assertRaisesRegex(RunTerminated, "max_budget"):
+            RunController(store).record_iteration(cost=2)
+
+        state = replay(store.read_all()).state
+        self.assertEqual(state.iteration, 1)
+        self.assertEqual(state.spent, 4)
+        self.assertTrue(state.terminated)
+        self.assertEqual(state.termination_reason, "max_budget")
 
 
 if __name__ == "__main__":

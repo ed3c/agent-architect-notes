@@ -21,6 +21,10 @@ class AgentState:
     run_id: str | None = None
     iteration: int = 0
     spent: int = 0
+    max_iterations: int | None = None
+    max_budget: int | None = None
+    terminated: bool = False
+    termination_reason: str | None = None
     pending_effects: dict[str, dict[str, Any]] = field(default_factory=dict)
     completed_effects: dict[str, Any] = field(default_factory=dict)
     seen_event_ids: set[str] = field(default_factory=set)
@@ -53,6 +57,10 @@ def _replay_from(state: AgentState, events: Iterable[Event]) -> ReplayResult:
 
         if event.kind == "run_started":
             state.run_id = str(event.data["run_id"])
+            if "max_iterations" in event.data:
+                state.max_iterations = int(event.data["max_iterations"])
+            if "max_budget" in event.data:
+                state.max_budget = int(event.data["max_budget"])
         elif event.kind == "iteration_recorded":
             state.iteration += 1
             state.spent += int(event.data["cost"])
@@ -63,6 +71,9 @@ def _replay_from(state: AgentState, events: Iterable[Event]) -> ReplayResult:
             effect_id = str(event.data["effect_id"])
             state.pending_effects.pop(effect_id, None)
             state.completed_effects[effect_id] = event.data["result"]
+        elif event.kind == "run_terminated":
+            state.terminated = True
+            state.termination_reason = str(event.data["reason"])
         else:
             raise ValueError(f"unsupported event kind: {event.kind}")
 
@@ -102,10 +113,14 @@ def _serialize_state(state: AgentState) -> str:
     payload = {
         "completed_effects": state.completed_effects,
         "iteration": state.iteration,
+        "max_budget": state.max_budget,
+        "max_iterations": state.max_iterations,
         "pending_effects": state.pending_effects,
         "run_id": state.run_id,
         "seen_event_ids": sorted(state.seen_event_ids),
         "spent": state.spent,
+        "terminated": state.terminated,
+        "termination_reason": state.termination_reason,
     }
     return json.dumps(payload, sort_keys=True, separators=(",", ":"))
 
@@ -116,6 +131,10 @@ def _deserialize_state(state_json: str) -> AgentState:
         run_id=payload["run_id"],
         iteration=int(payload["iteration"]),
         spent=int(payload["spent"]),
+        max_iterations=payload["max_iterations"],
+        max_budget=payload["max_budget"],
+        terminated=bool(payload["terminated"]),
+        termination_reason=payload["termination_reason"],
         pending_effects=dict(payload["pending_effects"]),
         completed_effects=dict(payload["completed_effects"]),
         seen_event_ids=set(payload["seen_event_ids"]),
@@ -139,6 +158,64 @@ class InMemoryEventStore:
 
 class SimulatedCrash(RuntimeError):
     """Raised by the lab at a deliberate crash boundary."""
+
+
+class RunTerminated(RuntimeError):
+    """Raised when a persisted run limit prevents another iteration."""
+
+
+class RunController:
+    def __init__(self, store: InMemoryEventStore) -> None:
+        self._store = store
+
+    @classmethod
+    def start(
+        cls,
+        store: InMemoryEventStore,
+        *,
+        run_id: str,
+        max_iterations: int,
+        max_budget: int,
+    ) -> "RunController":
+        store.append(
+            Event(
+                event_id=f"run:{run_id}:started",
+                kind="run_started",
+                data={
+                    "run_id": run_id,
+                    "max_iterations": max_iterations,
+                    "max_budget": max_budget,
+                },
+            )
+        )
+        return cls(store)
+
+    def record_iteration(self, *, cost: int) -> None:
+        state = replay(self._store.read_all()).state
+        if state.terminated:
+            raise RunTerminated(str(state.termination_reason))
+        if state.max_iterations is not None and state.iteration >= state.max_iterations:
+            self._terminate(state, "max_iterations")
+        if state.max_budget is not None and state.spent + cost > state.max_budget:
+            self._terminate(state, "max_budget")
+
+        self._store.append(
+            Event(
+                event_id=f"run:{state.run_id}:iteration:{state.iteration + 1}",
+                kind="iteration_recorded",
+                data={"cost": cost},
+            )
+        )
+
+    def _terminate(self, state: AgentState, reason: str) -> None:
+        self._store.append(
+            Event(
+                event_id=f"run:{state.run_id}:terminated:{reason}",
+                kind="run_terminated",
+                data={"reason": reason},
+            )
+        )
+        raise RunTerminated(reason)
 
 
 class DurableRunner:
