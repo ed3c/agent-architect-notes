@@ -37,6 +37,7 @@ The agent integration layer turns live learning state into a bounded task contra
 - [Two Sum First Task](docs/learning-system/exercises/two-sum-first-task.md)
 - [Knowledge Index](docs/learning-system/knowledge-index.md)
 - [Prompt 分類法則](docs/learning-system/prompt-classification-rules.md)
+- [Discord 可複製 Prompt 目錄](docs/learning-system/discord-prompt-catalog.md)
 - [Repository Structure](docs/learning-system/repo-structure.md)
 - [Agent Architect Capstone](docs/learning-system/agent-architect-capstone.md)
 

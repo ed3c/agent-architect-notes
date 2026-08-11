@@ -24,6 +24,7 @@ agent-architect-notes/
       first-two-weeks.md
       knowledge-index.md
       prompt-classification-rules.md # Prompt 分類、建構、淘汰與 Telemetry 校準法則
+      discord-prompt-catalog.md # Discord Copy Blocks 與 Agent Architecture Issue 應用
       repo-structure.md
       agent-architect-capstone.md
       exercises/

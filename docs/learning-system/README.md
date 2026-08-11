@@ -43,3 +43,5 @@ A topic is not complete when it is merely watched or read. It is complete only w
 - Session Log: actual execution record.
 - Exercise Log: LeetCode, production lab, system design, and English drill records.
 - Knowledge Index: GitHub source of truth for long-form notes.
+- Discord Prompt Catalog: 依 `INFERENCE` 頻率排序、可獨立複製的 Prompt Families 與
+  Agent Architecture Issue Applications。
