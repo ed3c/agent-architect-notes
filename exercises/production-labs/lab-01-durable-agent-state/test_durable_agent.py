@@ -1,9 +1,12 @@
 import unittest
+from dataclasses import replace
 
 from durable_agent import (
+    create_snapshot,
     DurableRunner,
     Event,
     InMemoryEventStore,
+    replay_with_snapshot,
     SimulatedCrash,
     replay,
 )
@@ -37,6 +40,64 @@ class ReplayContractTests(unittest.TestCase):
         self.assertEqual(result.state.iteration, 1)
         self.assertEqual(result.state.spent, 3)
         self.assertEqual(result.applied_events, 2)
+
+    def test_snapshot_plus_tail_matches_full_replay_with_less_replay_work(self):
+        events = [
+            Event("event-1", "run_started", {"run_id": "run-1"}),
+            Event("event-2", "iteration_recorded", {"cost": 2}),
+            Event("event-3", "iteration_recorded", {"cost": 3}),
+            Event("event-4", "iteration_recorded", {"cost": 5}),
+            Event("event-5", "iteration_recorded", {"cost": 8}),
+        ]
+        snapshot = create_snapshot(events[:3])
+
+        full_replay = replay(events)
+        snapshot_replay = replay_with_snapshot(events, snapshot)
+
+        self.assertEqual(snapshot_replay.state, full_replay.state)
+        self.assertEqual(full_replay.applied_events, 5)
+        self.assertEqual(snapshot_replay.applied_events, 2)
+
+    def test_corrupt_snapshot_falls_back_to_full_replay(self):
+        events = [
+            Event("event-1", "run_started", {"run_id": "run-1"}),
+            Event("event-2", "iteration_recorded", {"cost": 2}),
+            Event("event-3", "iteration_recorded", {"cost": 3}),
+        ]
+        snapshot = create_snapshot(events[:2])
+        corrupt_snapshot = replace(
+            snapshot,
+            state_json=snapshot.state_json.replace('"spent":2', '"spent":999'),
+        )
+
+        result = replay_with_snapshot(events, corrupt_snapshot)
+
+        self.assertEqual(result.state, replay(events).state)
+        self.assertEqual(result.applied_events, 3)
+
+    def test_missing_snapshot_falls_back_to_full_replay(self):
+        events = [
+            Event("event-1", "run_started", {"run_id": "run-1"}),
+            Event("event-2", "iteration_recorded", {"cost": 2}),
+        ]
+
+        result = replay_with_snapshot(events, None)
+
+        self.assertEqual(result.state, replay(events).state)
+        self.assertEqual(result.applied_events, 2)
+
+    def test_unknown_snapshot_schema_falls_back_to_full_replay(self):
+        events = [
+            Event("event-1", "run_started", {"run_id": "run-1"}),
+            Event("event-2", "iteration_recorded", {"cost": 2}),
+            Event("event-3", "iteration_recorded", {"cost": 3}),
+        ]
+        future_snapshot = replace(create_snapshot(events[:2]), schema_version=2)
+
+        result = replay_with_snapshot(events, future_snapshot)
+
+        self.assertEqual(result.state, replay(events).state)
+        self.assertEqual(result.applied_events, 3)
 
 
 class EffectBoundaryContractTests(unittest.TestCase):

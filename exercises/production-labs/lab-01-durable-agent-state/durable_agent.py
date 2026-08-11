@@ -1,7 +1,12 @@
 """Minimal durable-agent state machine used by the learning lab."""
 
+import hashlib
+import json
 from dataclasses import dataclass, field
 from typing import Any, Iterable, Mapping, Protocol
+
+
+SNAPSHOT_SCHEMA_VERSION = 1
 
 
 @dataclass(frozen=True)
@@ -27,8 +32,19 @@ class ReplayResult:
     applied_events: int
 
 
+@dataclass(frozen=True)
+class Snapshot:
+    schema_version: int
+    last_event_offset: int
+    state_json: str
+    checksum: str
+
+
 def replay(events: Iterable[Event]) -> ReplayResult:
-    state = AgentState()
+    return _replay_from(AgentState(), events)
+
+
+def _replay_from(state: AgentState, events: Iterable[Event]) -> ReplayResult:
     applied_events = 0
 
     for event in events:
@@ -54,6 +70,56 @@ def replay(events: Iterable[Event]) -> ReplayResult:
         applied_events += 1
 
     return ReplayResult(state=state, applied_events=applied_events)
+
+
+def create_snapshot(events: Iterable[Event]) -> Snapshot:
+    event_list = list(events)
+    state_json = _serialize_state(replay(event_list).state)
+    return Snapshot(
+        schema_version=SNAPSHOT_SCHEMA_VERSION,
+        last_event_offset=len(event_list),
+        state_json=state_json,
+        checksum=hashlib.sha256(state_json.encode("utf-8")).hexdigest(),
+    )
+
+
+def replay_with_snapshot(
+    events: Iterable[Event], snapshot: Snapshot | None
+) -> ReplayResult:
+    event_list = list(events)
+    if snapshot is None:
+        return replay(event_list)
+    if snapshot.schema_version != SNAPSHOT_SCHEMA_VERSION:
+        return replay(event_list)
+    actual_checksum = hashlib.sha256(snapshot.state_json.encode("utf-8")).hexdigest()
+    if actual_checksum != snapshot.checksum:
+        return replay(event_list)
+    state = _deserialize_state(snapshot.state_json)
+    return _replay_from(state, event_list[snapshot.last_event_offset :])
+
+
+def _serialize_state(state: AgentState) -> str:
+    payload = {
+        "completed_effects": state.completed_effects,
+        "iteration": state.iteration,
+        "pending_effects": state.pending_effects,
+        "run_id": state.run_id,
+        "seen_event_ids": sorted(state.seen_event_ids),
+        "spent": state.spent,
+    }
+    return json.dumps(payload, sort_keys=True, separators=(",", ":"))
+
+
+def _deserialize_state(state_json: str) -> AgentState:
+    payload = json.loads(state_json)
+    return AgentState(
+        run_id=payload["run_id"],
+        iteration=int(payload["iteration"]),
+        spent=int(payload["spent"]),
+        pending_effects=dict(payload["pending_effects"]),
+        completed_effects=dict(payload["completed_effects"]),
+        seen_event_ids=set(payload["seen_event_ids"]),
+    )
 
 
 class EffectPort(Protocol):
