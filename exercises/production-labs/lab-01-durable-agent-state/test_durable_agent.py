@@ -101,6 +101,23 @@ class ReplayContractTests(unittest.TestCase):
         self.assertEqual(result.state, replay(events).state)
         self.assertEqual(result.applied_events, 3)
 
+    def test_snapshot_from_another_event_stream_is_rejected(self):
+        first_stream = [
+            Event("event-1", "run_started", {"run_id": "run-1"}),
+            Event("event-2", "iteration_recorded", {"cost": 2}),
+        ]
+        second_stream = [
+            Event("event-a", "run_started", {"run_id": "run-2"}),
+            Event("event-b", "iteration_recorded", {"cost": 7}),
+            Event("event-c", "iteration_recorded", {"cost": 11}),
+        ]
+        foreign_snapshot = create_snapshot(first_stream)
+
+        result = replay_with_snapshot(second_stream, foreign_snapshot)
+
+        self.assertEqual(result.state, replay(second_stream).state)
+        self.assertEqual(result.applied_events, 3)
+
 
 class EffectBoundaryContractTests(unittest.TestCase):
     def test_resume_deduplicates_effect_after_crash_before_completion_record(self):

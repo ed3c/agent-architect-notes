@@ -42,6 +42,7 @@ class Snapshot:
     last_event_offset: int
     state_json: str
     checksum: str
+    event_prefix_checksum: str
 
 
 def replay(events: Iterable[Event]) -> ReplayResult:
@@ -91,6 +92,7 @@ def create_snapshot(events: Iterable[Event]) -> Snapshot:
         last_event_offset=len(event_list),
         state_json=state_json,
         checksum=hashlib.sha256(state_json.encode("utf-8")).hexdigest(),
+        event_prefix_checksum=_event_prefix_checksum(event_list),
     )
 
 
@@ -102,11 +104,25 @@ def replay_with_snapshot(
         return replay(event_list)
     if snapshot.schema_version != SNAPSHOT_SCHEMA_VERSION:
         return replay(event_list)
+    if snapshot.last_event_offset > len(event_list):
+        return replay(event_list)
+    event_prefix = event_list[: snapshot.last_event_offset]
+    if _event_prefix_checksum(event_prefix) != snapshot.event_prefix_checksum:
+        return replay(event_list)
     actual_checksum = hashlib.sha256(snapshot.state_json.encode("utf-8")).hexdigest()
     if actual_checksum != snapshot.checksum:
         return replay(event_list)
     state = _deserialize_state(snapshot.state_json)
     return _replay_from(state, event_list[snapshot.last_event_offset :])
+
+
+def _event_prefix_checksum(events: Iterable[Event]) -> str:
+    payload = [
+        {"data": dict(event.data), "event_id": event.event_id, "kind": event.kind}
+        for event in events
+    ]
+    serialized = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
 
 
 def _serialize_state(state: AgentState) -> str:
