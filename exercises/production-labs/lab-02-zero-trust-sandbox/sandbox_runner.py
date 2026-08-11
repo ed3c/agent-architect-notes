@@ -2,6 +2,8 @@
 
 from dataclasses import dataclass
 from pathlib import Path
+import subprocess
+import uuid
 
 
 PYTHON_IMAGE = (
@@ -16,6 +18,15 @@ class SandboxPolicy:
     pids_limit: int = 32
     tmpfs_size: str = "16m"
     user: str = "65534:65534"
+
+
+@dataclass(frozen=True)
+class SandboxResult:
+    container_name: str
+    returncode: int
+    stdout: str
+    stderr: str
+    timed_out: bool
 
 
 class DockerSandbox:
@@ -63,3 +74,62 @@ class DockerSandbox:
             "python",
             f"/work/{script_name}",
         ]
+
+    def run_script(self, script_name: str, *, timeout_seconds: float) -> SandboxResult:
+        script_path = self._corpus_dir / script_name
+        if not script_path.is_file():
+            raise FileNotFoundError(f"negative corpus script not found: {script_name}")
+
+        container_name = f"agent-sandbox-{uuid.uuid4().hex[:12]}"
+        command = self.build_command(script_name, container_name)
+
+        try:
+            completed = subprocess.run(
+                command,
+                capture_output=True,
+                text=True,
+                timeout=timeout_seconds,
+                check=False,
+            )
+            return SandboxResult(
+                container_name=container_name,
+                returncode=completed.returncode,
+                stdout=completed.stdout,
+                stderr=completed.stderr,
+                timed_out=False,
+            )
+        except subprocess.TimeoutExpired as error:
+            return SandboxResult(
+                container_name=container_name,
+                returncode=124,
+                stdout=_timeout_text(error.stdout),
+                stderr=_timeout_text(error.stderr),
+                timed_out=True,
+            )
+        finally:
+            self._remove_container(container_name)
+
+    def container_exists(self, container_name: str) -> bool:
+        completed = subprocess.run(
+            ["docker", "container", "inspect", container_name],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        return completed.returncode == 0
+
+    def _remove_container(self, container_name: str) -> None:
+        subprocess.run(
+            ["docker", "container", "rm", "--force", container_name],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+
+def _timeout_text(value: bytes | str | None) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bytes):
+        return value.decode("utf-8", errors="replace")
+    return value

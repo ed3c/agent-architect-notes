@@ -26,5 +26,17 @@ class SandboxCommandContractTests(unittest.TestCase):
         self.assertEqual(values[index + 1], second)
 
 
+class SandboxExecutionContractTests(unittest.TestCase):
+    def test_successful_run_is_removed_after_exit(self):
+        sandbox = DockerSandbox(SandboxPolicy())
+
+        result = sandbox.run_script("success.py", timeout_seconds=5)
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout.strip(), "SANDBOX_OK")
+        self.assertFalse(result.timed_out)
+        self.assertFalse(sandbox.container_exists(result.container_name))
+
+
 if __name__ == "__main__":
     unittest.main()
