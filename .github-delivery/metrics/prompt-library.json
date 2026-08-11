@@ -1,0 +1,172 @@
+{
+  "fetched_at": "2026-08-11T15:36:33Z",
+  "github_repo": "ed3c/agent-architect-notes",
+  "github_repository_id": "R_kgDOTyex1A",
+  "line": "prompt-library",
+  "percentiles": {
+    "blocked_seconds": {
+      "p50": 0,
+      "p85": 0
+    },
+    "cycle_seconds": {
+      "p50": 24,
+      "p85": 28
+    },
+    "lead_seconds": {
+      "p50": 1113,
+      "p85": 1633
+    },
+    "queue_seconds": {
+      "p50": 1085,
+      "p85": 1609
+    },
+    "review_seconds": {
+      "p50": 24,
+      "p85": 28
+    }
+  },
+  "project_url": "https://github.com/users/ed3c/projects/4",
+  "quality": {
+    "first_pass_rate": null,
+    "redaction_leakage_rate": null,
+    "reopen_rate": 0.0
+  },
+  "schema": "github-delivery-metrics/v1",
+  "slices": [
+    {
+      "accepted_pr": null,
+      "blocked_seconds": 0,
+      "currently_blocked": false,
+      "cycle_seconds": null,
+      "issue_number": 1,
+      "issue_state": "OPEN",
+      "lead_seconds": null,
+      "queue_seconds": null,
+      "reopened": false,
+      "review_seconds": null,
+      "started_pr": null,
+      "title": "PRD: Agent Architecture Qualified Learning Units"
+    },
+    {
+      "accepted_pr": null,
+      "blocked_seconds": 0,
+      "currently_blocked": false,
+      "cycle_seconds": null,
+      "issue_number": 2,
+      "issue_state": "OPEN",
+      "lead_seconds": null,
+      "queue_seconds": null,
+      "reopened": false,
+      "review_seconds": null,
+      "started_pr": null,
+      "title": "Slice: Durable Agent state, replay, snapshot, and resume"
+    },
+    {
+      "accepted_pr": null,
+      "blocked_seconds": 0,
+      "currently_blocked": false,
+      "cycle_seconds": null,
+      "issue_number": 3,
+      "issue_state": "OPEN",
+      "lead_seconds": null,
+      "queue_seconds": null,
+      "reopened": false,
+      "review_seconds": null,
+      "started_pr": null,
+      "title": "Slice: Zero-trust Agent code sandbox and egress controls"
+    },
+    {
+      "accepted_pr": null,
+      "blocked_seconds": 0,
+      "currently_blocked": false,
+      "cycle_seconds": null,
+      "issue_number": 4,
+      "issue_state": "OPEN",
+      "lead_seconds": null,
+      "queue_seconds": null,
+      "reopened": false,
+      "review_seconds": null,
+      "started_pr": null,
+      "title": "Slice: Coding-Agent benchmark integrity and anti-cheating harness"
+    },
+    {
+      "accepted_pr": null,
+      "blocked_seconds": 0,
+      "currently_blocked": false,
+      "cycle_seconds": null,
+      "issue_number": 5,
+      "issue_state": "OPEN",
+      "lead_seconds": null,
+      "queue_seconds": null,
+      "reopened": false,
+      "review_seconds": null,
+      "started_pr": null,
+      "title": "Slice: Eval maturity and LLM-judge calibration"
+    },
+    {
+      "accepted_pr": null,
+      "blocked_seconds": 0,
+      "currently_blocked": false,
+      "cycle_seconds": null,
+      "issue_number": 6,
+      "issue_state": "OPEN",
+      "lead_seconds": null,
+      "queue_seconds": null,
+      "reopened": false,
+      "review_seconds": null,
+      "started_pr": null,
+      "title": "Slice: Agent observability, trajectory replay, and first-divergence diagnosis"
+    },
+    {
+      "accepted_pr": null,
+      "blocked_seconds": 0,
+      "currently_blocked": false,
+      "cycle_seconds": null,
+      "issue_number": 7,
+      "issue_state": "OPEN",
+      "lead_seconds": null,
+      "queue_seconds": null,
+      "reopened": false,
+      "review_seconds": null,
+      "started_pr": null,
+      "title": "Slice: Skills × MCP capability packaging and eval"
+    },
+    {
+      "accepted_pr": 11,
+      "blocked_seconds": 0,
+      "currently_blocked": false,
+      "cycle_seconds": 28,
+      "issue_number": 9,
+      "issue_state": "CLOSED",
+      "lead_seconds": 1113,
+      "queue_seconds": 1085,
+      "reopened": false,
+      "review_seconds": 28,
+      "started_pr": 11,
+      "title": "Slice: Prompt classification laws and classifier system prompt"
+    },
+    {
+      "accepted_pr": 12,
+      "blocked_seconds": 0,
+      "currently_blocked": false,
+      "cycle_seconds": 24,
+      "issue_number": 10,
+      "issue_state": "CLOSED",
+      "lead_seconds": 1633,
+      "queue_seconds": 1609,
+      "reopened": false,
+      "review_seconds": 24,
+      "started_pr": 12,
+      "title": "Slice: Discord copy-ready prompt catalog with Agent Architecture applications"
+    }
+  ],
+  "summary": {
+    "accepted_slices": 2,
+    "blocked_slices": 0,
+    "closed_without_merge": 0,
+    "throughput_28d": 2,
+    "throughput_7d": 2,
+    "total_slices": 9,
+    "wip": 0
+  }
+}
