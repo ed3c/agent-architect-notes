@@ -17,6 +17,7 @@ Start here when Codex, Claude Code, or another learning agent operates on this r
 - [Claude Code Adapter](CLAUDE.md)
 - [Integration Architecture and Requirements](docs/agent-integration/README.md)
 - [Canonical Learning Orchestrator System Prompt](docs/agent-integration/SYSTEM_PROMPT.md)
+- [Prompt Intent Classifier System Prompt](docs/agent-integration/PROMPT_CLASSIFIER_SYSTEM_PROMPT.md)
 - [Context Routing Contract](docs/agent-integration/CONTEXT_ROUTING.md)
 - [State and Evidence Contract](docs/agent-integration/STATE_EVIDENCE_CONTRACT.md)
 - [Prompt Playbook](docs/agent-integration/PROMPT_PLAYBOOK.md)
@@ -35,6 +36,7 @@ The agent integration layer turns live learning state into a bounded task contra
 - [First Two Weeks](docs/learning-system/first-two-weeks.md)
 - [Two Sum First Task](docs/learning-system/exercises/two-sum-first-task.md)
 - [Knowledge Index](docs/learning-system/knowledge-index.md)
+- [Prompt 分類法則](docs/learning-system/prompt-classification-rules.md)
 - [Repository Structure](docs/learning-system/repo-structure.md)
 - [Agent Architect Capstone](docs/learning-system/agent-architect-capstone.md)
 

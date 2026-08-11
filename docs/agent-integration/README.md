@@ -77,6 +77,7 @@ flowchart TD
 | Control Plane | Schedule, status, scoring inputs, review dates, indexes | Google Sheet |
 | Knowledge Plane | Domain models, task instructions, templates, architecture notes | `docs/learning-system/`, `docs/kb/`, `docs/templates/` |
 | Context Routing Plane | Lifecycle/domain/mode classification and minimal context packs | `CONTEXT_ROUTING.md` |
+| Prompt Compilation Plane | Raw request classification and smallest sufficient copy-ready prompt | `PROMPT_CLASSIFIER_SYSTEM_PROMPT.md`, `../learning-system/prompt-classification-rules.md` |
 | Task Compiler | Contract, timebox, hint policy, assertions, evidence and stop condition | `SYSTEM_PROMPT.md` |
 | State and Evidence Plane | Enums, keys, score rules, receipts, idempotency and drift handling | `STATE_EVIDENCE_CONTRACT.md` |
 | Qualification Plane | Repeatable scenarios that detect prompt or integration regressions | `INTEGRATION_TESTS.md` |
@@ -308,6 +309,7 @@ New writes must use the current validation list. A separate, explicit migration 
 docs/agent-integration/
   README.md                    # Architecture and concrete requirements
   SYSTEM_PROMPT.md              # Ready-to-use learning orchestrator prompt
+  PROMPT_CLASSIFIER_SYSTEM_PROMPT.md # 前置 Prompt Classifier；不執行 Task
   CONTEXT_ROUTING.md            # Trigger-to-context routing and unknown fallback
   STATE_EVIDENCE_CONTRACT.md    # Sheet schema, state machines, evidence and scoring
   PROMPT_PLAYBOOK.md            # Invocation patterns and expected outputs
@@ -324,6 +326,11 @@ When changing this integration layer:
 4. Run all relevant scenarios in `INTEGRATION_TESTS.md`.
 5. Record known incompatibilities or schema drift.
 6. Do not migrate live Sheet values unless that migration is explicitly requested and independently verified.
+
+`PROMPT_CLASSIFIER_SYSTEM_PROMPT.md` 是 Additive Front-end Compiler。它只在使用者
+需要把非結構化需求編譯成 Prompt 時使用，不取代 Learning Orchestrator，也不取得
+Repository Authority 或額外 `write_scope`。其法則來源是
+`docs/learning-system/prompt-classification-rules.md`。
 
 ## 12. Definition of done
 

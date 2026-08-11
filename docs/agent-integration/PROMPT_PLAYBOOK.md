@@ -53,6 +53,13 @@ runtime:
 
 Temporary state belongs in the runtime envelope, not in the canonical prompt.
 
+### 不確定該使用哪一種 Prompt
+
+先使用 [Prompt Intent Classifier System Prompt](PROMPT_CLASSIFIER_SYSTEM_PROMPT.md)，
+依 [Prompt 分類法則](../learning-system/prompt-classification-rules.md) 把原始需求編譯成
+一個聚焦 Prompt。Classifier 只負責 Classification 與 Compilation，不執行 Task；
+若使用者已明確選定下列 Intent Alias，直接使用對應流程，不必多加一層 Classifier。
+
 ## 2. Intent aliases
 
 | Alias | Meaning | Default write behavior |
