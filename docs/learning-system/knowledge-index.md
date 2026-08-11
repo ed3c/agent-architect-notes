@@ -20,6 +20,8 @@ Before selecting a domain file:
 | --- | --- | --- |
 | Agent Operations | Daily status, task selection, mode selection, scoring, recording, review scheduling, mock gate, or cross-tool handoff | `docs/agent-integration/README.md` |
 | Prompt Orchestration | Need a ready-to-use learning-agent system prompt or invocation pattern | `docs/agent-integration/SYSTEM_PROMPT.md` |
+| Prompt Classification | 非結構化需求需要分類、淘汰過時 Pattern，並編譯為最小可複製 Prompt | `docs/learning-system/prompt-classification-rules.md` |
+| Prompt Classifier | 需要可直接作為 System／Developer Prompt 的前置 Prompt Compiler | `docs/agent-integration/PROMPT_CLASSIFIER_SYSTEM_PROMPT.md` |
 | Context Routing | User should not need to choose the correct prompt, document, or skill manually | `docs/agent-integration/CONTEXT_ROUTING.md` |
 | State and Evidence | Current progress, Sheet write, Done gate, score, review date, evidence maturity, or schema drift | `docs/agent-integration/STATE_EVIDENCE_CONTRACT.md` |
 | Integration Qualification | Agent behavior, prompt, schema, routing, persistence, or security changed | `docs/agent-integration/INTEGRATION_TESTS.md` |

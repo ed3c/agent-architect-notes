@@ -9,6 +9,7 @@ agent-architect-notes/
     agent-integration/
       README.md                     # Architecture, AIR requirements, boundaries, and definition of done
       SYSTEM_PROMPT.md              # Canonical learning-orchestrator system prompt
+      PROMPT_CLASSIFIER_SYSTEM_PROMPT.md # 前置 Prompt Classifier System Prompt
       CONTEXT_ROUTING.md            # Lifecycle/domain/mode/evidence routing and unknown-domain fallback
       STATE_EVIDENCE_CONTRACT.md    # Sheet schema, states, scoring, evidence, review, and persistence contracts
       PROMPT_PLAYBOOK.md            # Reusable invocation patterns for supported clients
@@ -22,6 +23,7 @@ agent-architect-notes/
       leetcode-alg-mental-simulator.md
       first-two-weeks.md
       knowledge-index.md
+      prompt-classification-rules.md # Prompt 分類、建構、淘汰與 Telemetry 校準法則
       repo-structure.md
       agent-architect-capstone.md
       exercises/
