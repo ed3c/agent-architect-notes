@@ -6,6 +6,9 @@
 - [SD-AA-01：Design a Durable Agent Orchestrator](../../exercises/system-design/sd-01-durable-agent-orchestrator.md)
 - [LAB-AA-01：Durable Agent State 與 Effect Boundary](../../exercises/production-labs/lab-01-durable-agent-state/README.md)
 - [ADR-0001：Validated Snapshot + Tail Replay](../adr/adr-0001-durable-agent-recovery-hybrid.md)
+- [Zero-trust Agent Sandbox：Isolation、Egress 與 Cleanup](zero-trust-agent-sandbox.md)
+- [SD-AA-02：Zero-trust Agent Code Execution](../../exercises/system-design/sd-02-zero-trust-agent-code-sandbox.md)
+- [LAB-AA-02：Zero-trust Agent Code Sandbox](../../exercises/production-labs/lab-02-zero-trust-sandbox/README.md)
 
 ## Core Concepts
 

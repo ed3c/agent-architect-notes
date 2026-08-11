@@ -48,6 +48,7 @@ The agent integration layer turns live learning state into a bounded task contra
 - [System Design Index](docs/kb/system-design-index.md)
 - [Agent Architecture Index](docs/kb/agent-architecture-index.md)
 - [Durable Agent State：Replay、Snapshot、Resume](docs/kb/durable-agent-state.md)
+- [Zero-trust Agent Sandbox：Isolation、Egress、Cleanup](docs/kb/zero-trust-agent-sandbox.md)
 - [Evals, Security, Observability](docs/kb/evals-security-observability.md)
 
 ## Qualified Learning Units
@@ -55,6 +56,8 @@ The agent integration layer turns live learning state into a bounded task contra
 - [LAB-AA-01：Durable Agent State](exercises/production-labs/lab-01-durable-agent-state/README.md)
 - [SD-AA-01：Durable Agent Orchestrator](exercises/system-design/sd-01-durable-agent-orchestrator.md)
 - [ADR-0001：Durable Agent Recovery Hybrid](docs/adr/adr-0001-durable-agent-recovery-hybrid.md)
+- [LAB-AA-02：Zero-trust Agent Code Sandbox](exercises/production-labs/lab-02-zero-trust-sandbox/README.md)
+- [SD-AA-02：Zero-trust Agent Code Execution](exercises/system-design/sd-02-zero-trust-agent-code-sandbox.md)
 
 ## Templates
 
