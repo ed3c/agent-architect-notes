@@ -41,7 +41,7 @@
 - Agent Tool Gateway
 - Agent Memory Service
 - Agent Eval Platform
-- Sandboxed Code Execution Platform
+- [Sandboxed Code Execution Platform](../../exercises/system-design/sd-02-zero-trust-agent-code-sandbox.md)
 - Human Approval and Resume Workflow
 
 ## Tier 4: FDE Case Studies

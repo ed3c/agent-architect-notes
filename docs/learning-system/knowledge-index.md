@@ -32,6 +32,7 @@ Before selecting a domain file:
 | Production Coding | API, async, retry, queue, cache, logging | `docs/kb/production-live-coding.md` |
 | System Design | 45-60 minute architecture prompt | `docs/kb/system-design-index.md` |
 | Durable Agent State | Crash/restart、replay、checkpoint、snapshot、resume、idempotency、effect ambiguity 或 rollback | `docs/kb/durable-agent-state.md` |
+| Zero-trust Agent Sandbox | Agent-generated code、RCE、egress、credential broker、resource limits、cleanup 或 isolation選型 | `docs/kb/zero-trust-agent-sandbox.md` |
 | Agent Architecture | State, memory, termination, tool gateway | `docs/kb/agent-architecture-index.md` |
 | Evals | Dataset, grader, regression threshold | `docs/kb/evals-security-observability.md` |
 | Security | Tool use, prompt injection, sandbox, RBAC | `docs/kb/evals-security-observability.md` |

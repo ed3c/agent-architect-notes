@@ -35,6 +35,7 @@ agent-architect-notes/
       system-design-index.md
       agent-architecture-index.md
       durable-agent-state.md
+      zero-trust-agent-sandbox.md
       evals-security-observability.md
     templates/
       daily-session-note.md
@@ -47,13 +48,16 @@ agent-architect-notes/
     postmortems/
     eval-reports/
       2026-08-11-durable-agent-state-lab.md
+      2026-08-11-zero-trust-sandbox.md
     benchmark-results/
   exercises/
     leetcode/
     production-labs/
       lab-01-durable-agent-state/
+      lab-02-zero-trust-sandbox/
     system-design/
       sd-01-durable-agent-orchestrator.md
+      sd-02-zero-trust-agent-code-sandbox.md
     english/
   capstone/
     skill-registry/
