@@ -9,6 +9,21 @@ Private knowledge base and learning control plane for transitioning from senior 
 - Role positioning: **Senior Software Engineer transitioning into Agentic AI Systems**.
 - Primary route: Python 3 + DSA + Testing as the interview floor; Production Agent Systems + Evals + Security + System Design as the hiring ceiling.
 
+## Agent Integration
+
+Start here when Codex, Claude Code, or another learning agent operates on this repository:
+
+- [Canonical Agent Instructions](AGENTS.md)
+- [Claude Code Adapter](CLAUDE.md)
+- [Integration Architecture and Requirements](docs/agent-integration/README.md)
+- [Canonical Learning Orchestrator System Prompt](docs/agent-integration/SYSTEM_PROMPT.md)
+- [Context Routing Contract](docs/agent-integration/CONTEXT_ROUTING.md)
+- [State and Evidence Contract](docs/agent-integration/STATE_EVIDENCE_CONTRACT.md)
+- [Prompt Playbook](docs/agent-integration/PROMPT_PLAYBOOK.md)
+- [Integration Qualification Tests](docs/agent-integration/INTEGRATION_TESTS.md)
+
+The agent integration layer turns live learning state into a bounded task contract, protects Guided and Independent modes, requires evidence before completion, records long-form artifacts in GitHub, updates execution state in Google Sheets only when authorized, and schedules capability-based review.
+
 ## Main Index
 
 - [Learning System](docs/learning-system/README.md)
@@ -41,4 +56,4 @@ Private knowledge base and learning control plane for transitioning from senior 
 
 ## Operating Rule
 
-Google Sheets records execution, score, status, and evidence links. GitHub stores all long-form notes, exercise instructions, knowledge indexes, templates, and portfolio architecture documents. Sheet document URLs should point back to this repository rather than Google Docs.
+Google Sheets records execution, score, status, and evidence links. GitHub stores all long-form notes, exercise instructions, knowledge indexes, templates, integration contracts, system prompts, and portfolio architecture documents. Sheet document URLs should point back to this repository rather than Google Docs.
