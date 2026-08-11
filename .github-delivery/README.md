@@ -6,8 +6,9 @@ Scope Projection：
 - PRD：[Issue #8](https://github.com/ed3c/agent-architect-notes/issues/8)
 - Slices：[Issue #9](https://github.com/ed3c/agent-architect-notes/issues/9)、
   [Issue #10](https://github.com/ed3c/agent-architect-notes/issues/10)
-- Accepted PRs：[PR #11](https://github.com/ed3c/agent-architect-notes/pull/11)、
-  [PR #12](https://github.com/ed3c/agent-architect-notes/pull/12)
+- Delivery PRs：[PR #11](https://github.com/ed3c/agent-architect-notes/pull/11)、
+  [PR #12](https://github.com/ed3c/agent-architect-notes/pull/12)、
+  [PR #13](https://github.com/ed3c/agent-architect-notes/pull/13)（Receipt 與 PRD Closure）
 
 ## Multi-PRD Scope Limitation
 
@@ -24,7 +25,7 @@ PRD #1 與 PRD #8，因此未校正的 Sync 會把 #1–#7 錯列為 `prompt-lib
 1. 回讀 `gh project item-list 4 --owner ed3c --format json`。
 2. 確認 Project 只有 #8、#9、#10，且 #9／#10 為 `Done`。
 3. 確認 Receipt 的 `prd_issue_url` 是 #8，`issue_urls` 只有 #9／#10，`pr_urls` 只有
-   #11／#12。
+   #11／#12／#13。
 4. 執行 Zero-network Gate：
    `python3 <github-delivery-loop>/scripts/github_delivery.py check --registry .github-delivery/registry.json`。
 

@@ -8,13 +8,14 @@
   "line": "prompt-library",
   "pr_urls": [
     "https://github.com/ed3c/agent-architect-notes/pull/11",
-    "https://github.com/ed3c/agent-architect-notes/pull/12"
+    "https://github.com/ed3c/agent-architect-notes/pull/12",
+    "https://github.com/ed3c/agent-architect-notes/pull/13"
   ],
   "prd_issue_url": "https://github.com/ed3c/agent-architect-notes/issues/8",
   "project_url": "https://github.com/users/ed3c/projects/4",
   "schema": "github-delivery-receipt/v1",
   "scope_basis": "github-project-items",
-  "scope_note": "Project #4 contains PRD #8 and slices #9-#10; github-delivery-loop v1 repository-wide sync was narrowed to those live project items.",
+  "scope_note": "Project #4 contains PRD #8 and slices #9-#10; github-delivery-loop v1 repository-wide sync was narrowed to those live project items. PR #13 carries this receipt and closes #8.",
   "source_commit": "ea1f231f6faf9db5516e5c699b8955b8ca5f66c1",
-  "synced_at": "2026-08-11T15:36:33Z"
+  "synced_at": "2026-08-11T15:40:32Z"
 }
