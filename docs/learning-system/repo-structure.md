@@ -34,6 +34,7 @@ agent-architect-notes/
       production-live-coding.md
       system-design-index.md
       agent-architecture-index.md
+      durable-agent-state.md
       evals-security-observability.md
     templates/
       daily-session-note.md
@@ -42,13 +43,17 @@ agent-architect-notes/
       adr-template.md
       postmortem-template.md
     adr/
+      adr-0001-durable-agent-recovery-hybrid.md
     postmortems/
     eval-reports/
+      2026-08-11-durable-agent-state-lab.md
     benchmark-results/
   exercises/
     leetcode/
     production-labs/
+      lab-01-durable-agent-state/
     system-design/
+      sd-01-durable-agent-orchestrator.md
     english/
   capstone/
     skill-registry/

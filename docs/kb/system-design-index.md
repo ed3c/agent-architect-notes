@@ -35,7 +35,7 @@
 
 ## Tier 3: Agent Architect
 
-- Durable Agent Orchestrator
+- [Durable Agent Orchestrator](../../exercises/system-design/sd-01-durable-agent-orchestrator.md)
 - Enterprise Action Agent
 - Multi-Agent Code Review System
 - Agent Tool Gateway
