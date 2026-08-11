@@ -1,0 +1,14 @@
+{
+  "schema": "github-delivery-registry/v1",
+  "repo_root": "..",
+  "lines": [
+    {
+      "id": "prompt-library",
+      "github_repo": "ed3c/agent-architect-notes",
+      "github_repository_id": "R_kgDOTyex1A",
+      "artifact_path": "docs/learning-system/discord-prompt-catalog.md",
+      "receipt_path": ".github-delivery/receipts/prompt-library.json",
+      "publication_path": ".github-delivery/publications/prompt-library.json"
+    }
+  ]
+}
