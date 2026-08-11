@@ -68,6 +68,53 @@ class SandboxExecutionContractTests(unittest.TestCase):
         self.assertEqual(result.stdout.strip(), "CREDENTIAL_ABSENT")
         self.assertFalse(sandbox.container_exists(result.container_name))
 
+    def test_timeout_forces_cleanup(self):
+        sandbox = DockerSandbox(SandboxPolicy())
+
+        result = sandbox.run_script("infinite_loop.py", timeout_seconds=1)
+
+        self.assertEqual(result.returncode, 124)
+        self.assertTrue(result.timed_out)
+        self.assertFalse(sandbox.container_exists(result.container_name))
+
+    def test_nonzero_exit_still_cleans_up(self):
+        sandbox = DockerSandbox(SandboxPolicy())
+
+        result = sandbox.run_script("explicit_failure.py", timeout_seconds=5)
+
+        self.assertEqual(result.returncode, 7)
+        self.assertFalse(result.timed_out)
+        self.assertFalse(sandbox.container_exists(result.container_name))
+
+    def test_memory_exhaustion_is_stopped_by_container_limit(self):
+        sandbox = DockerSandbox(SandboxPolicy())
+
+        result = sandbox.run_script("memory_exhaustion.py", timeout_seconds=5)
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertFalse(sandbox.container_exists(result.container_name))
+
+    def test_process_exhaustion_hits_pid_limit(self):
+        sandbox = DockerSandbox(SandboxPolicy())
+
+        result = sandbox.run_script("process_exhaustion.py", timeout_seconds=8)
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout.strip(), "PIDS_BLOCKED")
+        self.assertFalse(sandbox.container_exists(result.container_name))
+
+    def test_tmpfs_residue_does_not_survive_cleanup(self):
+        sandbox = DockerSandbox(SandboxPolicy())
+
+        writer = sandbox.run_script("write_residue.py", timeout_seconds=5)
+        reader = sandbox.run_script("check_residue.py", timeout_seconds=5)
+
+        self.assertEqual(writer.returncode, 0, writer.stderr)
+        self.assertEqual(reader.returncode, 0, reader.stderr)
+        self.assertEqual(reader.stdout.strip(), "RESIDUE_ABSENT")
+        self.assertFalse(sandbox.container_exists(writer.container_name))
+        self.assertFalse(sandbox.container_exists(reader.container_name))
+
 
 if __name__ == "__main__":
     unittest.main()
