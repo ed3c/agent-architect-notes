@@ -245,3 +245,12 @@ When writing:
 - Check that no secret, API key, local absolute path, or private production data was added.
 - Run the scenarios in `docs/agent-integration/INTEGRATION_TESTS.md` when the change affects routing, prompts, state, evidence, or scoring.
 - State what was verified and what could not be verified.
+
+<!-- BEGIN SHARED RUNTIME IDENTITY -->
+## Shared runtime identity and dual-forge preflight
+Canonical contract: `ed3c/skills-shared/skills/dual-forge-repository-loop/references/runtime-identity-contract.md`.
+Before mutating delivery state, classify runtime from evidence: `CHATGPT_GITHUB_CONNECTOR | GITHUB_ACTIONS | CLAUDE_CODE_LOCAL | CODEX_CLI_LOCAL | CHATGPT_DESKTOP_WORKTREE | UNKNOWN`.
+Connector ≠ Actions ≠ local worktree. Local claims require observed checkout/remotes/branch/HEAD; Forgejo requires a resolved local binding; Desktop requires an actually created worktree. `UNKNOWN` fails closed. Runtime, model family, and forge authority are separate. One mutable branch has one writer; runtime/HEAD changes require evidence rebinding.
+Dual-forge order: `runtime bind → GitHub ingress → local/Forgejo issue+worktree → verified Forgejo PR → local main → GitHub reconciliation → exact-head Actions → GitHub publication`.
+Three qualifying failures trigger fresh diagnosis + new worktree; no fourth blind patch.
+<!-- END SHARED RUNTIME IDENTITY -->
